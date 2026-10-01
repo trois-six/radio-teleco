@@ -5,13 +5,18 @@ description: "The 868 MHz link from the box to the receivers, reverse-engineered
 tags: [teleco, radio, 868mhz, fsk, rolling-code, sdr, firmware, memory]
 sources:
   - id: on-air
+    resource: on-air RTL-SDR captures of one Daisy box and one handheld Teleco remote (not published, they carry real serials)
     title: On-air captures of a Daisy box with an RTL-SDR receiver, each correlated with a command sent through the SDK and with the box's own serial and counter memory
   - id: box-memory
+    resource: MEMORY reads of the same Daisy box (not published)
     title: Box memory read with the MEMORY command
   - id: app
-    title: Daisy Teleco Android app, static analysis (firmware-update flow, remote pairing)
+    resource: https://play.google.com/store/apps/details?id=com.telecoautomation.daisy
+    title: Daisy Teleco Android app (com.telecoautomation.daisy), static analysis (firmware-update flow, remote pairing)
   - id: aioteleco
+    resource: https://github.com/trois-six/aioteleco
     title: The aioteleco SDK, used to send each command and read the box memory
+generated: { by: claude-code/claude-opus-5-5, at: 2026-10-01T08:15:00Z }
 ---
 
 # Radio link
