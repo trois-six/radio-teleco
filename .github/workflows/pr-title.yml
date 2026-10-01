@@ -1,0 +1,31 @@
+name: PR title
+
+# release-please reads the commits on main; with squash merges the PR title
+# becomes that commit, so it must follow Conventional Commits.
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  conventional-commit:
+    name: Conventional Commits
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read # read the PR title
+    steps:
+      - uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6.1.1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          # the subject starts lower-case, like the history of this repository
+          subjectPattern: ^(?![A-Z]).+$
+          subjectPatternError: |
+            The subject "{subject}" of the PR title "{title}" must start with a
+            lower-case letter, e.g. "feat(hub): add scenario support".

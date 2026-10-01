@@ -1,0 +1,44 @@
+# Git hooks, run by prek (https://github.com/j178/prek) or pre-commit:
+#   uvx prek install          # installs the pre-commit and commit-msg hooks
+#   uvx prek run --all-files
+# Keep the ruff rev in step with the ruff version locked in uv.lock.
+default_install_hook_types: [pre-commit, commit-msg]
+default_stages: [pre-commit, manual]
+# SDR captures (git-ignored, they hold real transmitter data).
+exclude: ^captures/
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+      - id: detect-private-key
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.8
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: local
+    hooks:
+      # Run from the project environment so mypy sees the locked dependencies.
+      - id: mypy
+        name: mypy
+        entry: uv run mypy
+        language: system
+        types_or: [python, pyi]
+        pass_filenames: false
+        require_serial: true
+
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v4.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]

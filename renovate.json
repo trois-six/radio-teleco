@@ -1,0 +1,39 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "helpers:pinGitHubActionDigests",
+    ":semanticCommits"
+  ],
+  "dependencyDashboard": true,
+  "prConcurrentLimit": 10,
+  "enabledManagers": [
+    "github-actions",
+    "pep621"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "automergeType": "branch"
+  },
+  "packageRules": [
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "groupName": "github actions",
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "description": "Library: keep the declared ranges, only move uv.lock.",
+      "matchManagers": [
+        "pep621"
+      ],
+      "rangeStrategy": "update-lockfile",
+      "groupName": "python dependencies",
+      "automerge": true,
+      "automergeType": "branch"
+    }
+  ]
+}

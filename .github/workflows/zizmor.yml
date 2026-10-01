@@ -1,0 +1,28 @@
+name: zizmor
+
+on:
+  push:
+    # renovate/** so that Renovate's branch automerge has checks to wait for
+    branches: [main, "renovate/**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  zizmor:
+    name: Audit GitHub Actions workflows
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: zizmorcore/zizmor-action@cc914d7f3750a2d13d75c7f184a1060aa0e9d482 # v0.6.4
+        with:
+          # report as annotations and fail the job instead of uploading SARIF
+          # (keeps the job a blocking check with a read-only token)
+          advanced-security: false
