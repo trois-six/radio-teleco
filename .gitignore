@@ -167,5 +167,9 @@ captures/
 *.cf32
 *.iq
 
+# Full flash backups and raw firmware images of the dev board: the stock
+# firmware contents are not ours to publish, never commit them
+/flash-backup/
+
 # Claude Code agent worktrees
 .claude/worktrees/
